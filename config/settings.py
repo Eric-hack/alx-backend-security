@@ -146,3 +146,11 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'UTC'
+from celery.schedules import crontab
+
+CELERY_BEAT_SCHEDULE = {
+    'detect_anomalies_every_hour': {
+        'task': 'ip_tracking.tasks.detect_anomalies',
+        'schedule': crontab(minute=0, hour='*'),  # every hour
+    },
+}
